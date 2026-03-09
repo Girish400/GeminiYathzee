@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Yahtzee Scorecard</title>
+    <style>
+        :root {
+            --border-color: #333;
+            --bg-color: #fff;
+            --header-bg: #f2f2f2;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #e0e0e0;
+            margin: 0;
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .scorecard-container {
+            width: 100%;
+            max-width: 390px; /* iPhone 14 width approx */
+            background: var(--bg-color);
+            border: 2px solid var(--border-color);
+            padding: 10px;
+            box-sizing: border-box;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            font-style: italic;
+            font-size: 2rem;
+            margin: 0;
+            display: inline-block;
+        }
+
+        .meta-info {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            margin-bottom: 10px;
+            font-size: 0.8rem;
+        }
+
+        .input-group {
+            display: flex;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .input-group label {
+            font-weight: bold;
+            margin-right: 5px;
+        }
+
+        input[type="text"] {
+            border: none;
+            flex-grow: 1;
+            outline: none;
+            font-size: 0.9rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.75rem;
+            table-layout: fixed;
+        }
+
+        th, td {
+            border: 1px solid var(--border-color);
+            text-align: center;
+            padding: 4px 2px;
+            height: 25px;
+        }
+
+        .left-align { text-align: left; padding-left: 4px; }
+        
+        thead th {
+            background-color: var(--header-bg);
+            font-size: 0.6rem;
+            text-transform: uppercase;
+        }
+
+        .section-header {
+            background-color: #eee;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+        }
+
+        input[type="number"] {
+            width: 90%;
+            border: none;
+            text-align: center;
+            font-size: 0.9rem;
+            -moz-appearance: textfield;
+        }
+
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .score-box { background-color: #fafafa; }
+        
+        .total-row {
+            font-weight: bold;
+            background-color: #f9f9f9;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="scorecard-container">
+    <div style="display: flex; justify-content: space-between; align-items: baseline;">
+        <h1>Yahtzee</h1>
+        <div class="meta-info">
+            <div id="datetime"></div>
+        </div>
+    </div>
+
+    <div class="input-group" style="margin-bottom: 15px;">
+        <label>NAME:</label>
+        <input type="text" placeholder="Enter Name">
+    </div>
+
+    <table>
+        <thead>
+            <tr class="section-header">
+                <th colspan="2">Upper Section</th>
+                <th>How to Score</th>
+                <th>Game #1</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="width: 15%;">Aces</td>
+                <td>⚀ = 1</td>
+                <td>Count/Add 1s</td>
+                <td><input type="number"></td>
+            </tr>
+            <tr>
+                <td>Twos</td>
+                <td>⚁ = 2</td>
+                <td>Count/Add 2s</td>
+                <td><input type="number"></td>
+            </tr>
+            <tr>
+                <td>Threes</td>
+                <td>⚂ = 3</td>
+                <td>Count/Add 3s</td>
+                <td><input type="number"></td>
+            </tr>
+            <tr>
+                <td>Fours</td>
+                <td>⚃ = 4</td>
+                <td>Count/Add 4s</td>
+                <td><input type="number"></td>
+            </tr>
+            <tr>
+                <td>Fives</td>
+                <td>⚄ = 5</td>
+                <td>Count/Add 5s</td>
+                <td><input type="number"></td>
+            </tr>
+            <tr>
+                <td>Sixes</td>
+                <td>⚅ = 6</td>
+                <td>Count/Add 6s</td>
+                <td><input type="number"></td>
+            </tr>
+            <tr class="total-row">
+                <td colspan="3" class="left-align">TOTAL SCORE</td>
+                <td><input type="number"></td>
+            </tr>
+            <tr>
+                <td colspan="2" class="left-align">BONUS (if 63+)</td>
+                <td>Score 35</td>
+                <td><input type="number"></td>
+            </tr>
+            <tr class="total-row">
+                <td colspan="3" class="left-align">TOTAL (Upper)</td>
+                <td><input type="number"></td>
+            </tr>
+
+            <tr class="section-header">
+                <th colspan="3">Lower Section</th>
+                <th>Game #1</th>
+            </tr>
+            <tr>
+                <td colspan="2" class="left-align">3 of a kind</td>
+                <td>Total All Dice</td>
+                <td><input type="number"></td>
+            </tr>
+            <tr>
+                <td colspan="2" class="left-align">4 of a kind</td>
+                <td>Total All Dice</td>
+                <td><input type="number"></td>
+            </tr>
+            <tr>
+                <td colspan="2" class="left-align">Full House</td>
+                <td>Score 25</td>
+                <td><input type="number"></td>
+            </tr>
+            <tr>
+                <td colspan="2" class="left-align">Sm. Straight</td>
+                <td>Score 30</td>
+                <td><input type="number"></td>
+            </tr>
+            <tr>
+                <td colspan="2" class="left-align">Lg. Straight</td>
+                <td>Score 40</td>
+            </tr>
+            <tr>
+                <td colspan="2" class="left-align">YAHTZEE</td>
+                <td>Score 50</td>
+                <td><input type="number"></td>
+            </tr>
+            <tr>
+                <td colspan="2" class="left-align">Chance</td>
+                <td>Total All 5</td>
+                <td><input type="number"></td>
+            </tr>
+            <tr class="total-row">
+                <td colspan="3" class="left-align">GRAND TOTAL</td>
+                <td><input type="number"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    // Set Current Date and Time
+    function updateDateTime() {
+        const now = new Date();
+        const options = { weekday: 'short', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+        document.getElementById('datetime').innerText = now.toLocaleString('en-US', options);
+    }
+    updateDateTime();
+</script>
+
+</body>
+</html>
